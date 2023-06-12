@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar_with_riverpod/collections/rutine.dart';
-import 'package:isar_with_riverpod/isar/isar_service.dart';
+// import 'package:isar_with_riverpod/isar/isar_service.dart';
 import 'package:isar_with_riverpod/provider/provider.dart';
 
 // ignore: must_be_immutable
@@ -15,6 +15,7 @@ class UpdateScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final updateRef = ref.watch(rutineProvider);
     print(rutine.name);
     return Scaffold(
       appBar: AppBar(
@@ -26,15 +27,12 @@ class UpdateScreen extends ConsumerWidget {
           children: [
             TextFormField(
               controller: _nameController,
-              decoration: InputDecoration(hintText: rutine.name),
             ),
             TextFormField(
               controller: _emailController,
-              decoration: InputDecoration(hintText: rutine.email),
             ),
             TextFormField(
               controller: _addressController,
-              decoration: InputDecoration(hintText: rutine.address),
             ),
             SizedBox(height: 50),
             ElevatedButton(
@@ -60,4 +58,10 @@ class UpdateScreen extends ConsumerWidget {
       ),
     );
   }
+
+  // readUpdateValue() {
+  //   _nameController.text = rutine.name.toString();
+  //   _emailController.text = rutine.email.toString();
+  //   _addressController.text = rutine.address.toString();
+  // }
 }
