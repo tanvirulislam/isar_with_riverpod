@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:isar_with_riverpod/collections/rutine.dart';
 import 'package:isar_with_riverpod/isar/isar_service.dart';
 import 'package:isar_with_riverpod/provider/provider.dart';
+import 'package:isar_with_riverpod/screens/update.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends ConsumerWidget {
@@ -27,48 +27,45 @@ class HomeScreen extends ConsumerWidget {
       appBar: AppBar(title: Text('Routine')),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            TextFormField(
-              controller: _nameController,
-              decoration: InputDecoration(hintText: 'Name'),
-            ),
-            TextFormField(
-              controller: _emailController,
-              decoration: InputDecoration(hintText: 'Email'),
-            ),
-            TextFormField(
-              controller: _addressController,
-              decoration: InputDecoration(hintText: 'Address'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                IsarService.addRoutine(
-                  name: _nameController.text,
-                  email: _emailController.text,
-                  address: _addressController.text,
-                );
-                // ref.read(rutineProvider.notifier).addRutine(rutinesRef);
-                clearText();
-              },
-              child: Text('Add'),
-            ),
-            SizedBox(height: 50),
-            Container(
-              height: 400,
-              alignment: Alignment.center,
-              // color: Colors.grey.shade200,
-              child: rutinesRef.when(
-                data: (data) {
-                  return SingleChildScrollView(
-                    child: Column(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              TextFormField(
+                controller: _nameController,
+                decoration: InputDecoration(hintText: 'Name'),
+              ),
+              TextFormField(
+                controller: _emailController,
+                decoration: InputDecoration(hintText: 'Email'),
+              ),
+              TextFormField(
+                controller: _addressController,
+                decoration: InputDecoration(hintText: 'Address'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  IsarService.addRoutine(
+                    name: _nameController.text,
+                    email: _emailController.text,
+                    address: _addressController.text,
+                  );
+                  clearText();
+                },
+                child: Text('Add'),
+              ),
+              SizedBox(height: 50),
+              Container(
+                alignment: Alignment.center,
+                child: rutinesRef.when(
+                  data: (data) {
+                    return Column(
                       children: [
                         for (final rutine in data)
                           ListTile(
                             leading: Text(rutine.id.toString()),
                             title: Text(rutine.name.toString()),
                             trailing: SizedBox(
-                              width: 50,
+                              width: 100,
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
@@ -80,20 +77,32 @@ class HomeScreen extends ConsumerWidget {
                                     },
                                     icon: Icon(Icons.delete_outline),
                                   ),
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              UpdateScreen(rutine: rutine),
+                                        ),
+                                      );
+                                    },
+                                    icon: Icon(Icons.edit_outlined),
+                                  ),
                                 ],
                               ),
                             ),
                           ),
                       ],
-                    ),
-                  );
-                },
-                error: (error, stackTrace) =>
-                    Center(child: Text(error.toString())),
-                loading: () => Center(child: CircularProgressIndicator()),
+                    );
+                  },
+                  error: (error, stackTrace) =>
+                      Center(child: Text(error.toString())),
+                  loading: () => Center(child: CircularProgressIndicator()),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

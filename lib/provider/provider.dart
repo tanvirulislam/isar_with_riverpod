@@ -18,6 +18,18 @@ class RoutineNotifier extends AsyncNotifier<List<Rutine>> {
     return await IsarService.readRoutine();
   }
 
+  // update data
+  updateRutine(id, name, email, address) async {
+    await isar.writeTxn(() async {
+      final rutineId = await isar.rutines.get(id);
+      rutineId!
+        ..name = name
+        ..email = email
+        ..address = address;
+      await isar.rutines.put(rutineId);
+    });
+  }
+
 // delete data
   void delete(Id id) {
     IsarService.delete(id);

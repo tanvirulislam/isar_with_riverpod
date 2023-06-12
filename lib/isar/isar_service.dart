@@ -37,4 +37,16 @@ class IsarService {
       await isar.rutines.delete(id);
     });
   }
+
+// update rutine
+  static updateRutine(id, name, email, address) async {
+    await isar.writeTxn(() async {
+      final rutineId = await isar.rutines.get(id);
+      rutineId!
+        ..name = name
+        ..email = email
+        ..address = address;
+      await isar.rutines.put(rutineId);
+    });
+  }
 }

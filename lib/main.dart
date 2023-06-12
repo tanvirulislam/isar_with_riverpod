@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:isar_with_riverpod/home.dart';
+import 'package:isar_with_riverpod/screens/home.dart';
 import 'package:isar_with_riverpod/isar/isar_service.dart';
 
 void main() async {
