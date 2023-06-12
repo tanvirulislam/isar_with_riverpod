@@ -46,9 +46,9 @@ class HomeScreen extends ConsumerWidget {
               ElevatedButton(
                 onPressed: () {
                   IsarService.addRoutine(
-                    nameController: _nameController.text,
-                    emailController: _emailController.text,
-                    ageController: _addressController.text,
+                    name: _nameController.text,
+                    email: _emailController.text,
+                    address: _addressController.text,
                   );
                   clearText();
                 },
