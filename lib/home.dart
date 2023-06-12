@@ -61,12 +61,4 @@ class HomeScreen extends ConsumerWidget {
       ),
     );
   }
-
-  //   readRoutine() async {
-  //   final newRutines = await isar.rutines.where().findAll();
-  //   setState(() {
-  //     rutines = newRutines;
-  //   });
-  //   print("length-------------${rutines.length}");
-  // }
 }
