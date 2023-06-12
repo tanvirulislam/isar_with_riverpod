@@ -8,7 +8,7 @@ final rutineProvider =
 
 class RoutineNotifier extends Notifier<List<Rutine>> {
   @override
-  build() {
+  List<Rutine> build() {
     return [];
   }
 

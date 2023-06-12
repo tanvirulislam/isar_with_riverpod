@@ -18,11 +18,12 @@ class HomeScreen extends ConsumerWidget {
     _emailController.clear();
   }
 
-  List<Rutine>? rutines;
+  // List<Rutine>? rutines;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final rutines = ref.watch(rutineProvider);
+    List<Rutine> rutines = ref.watch(rutineProvider);
+    print(rutines);
 
     return Scaffold(
       appBar: AppBar(title: Text('Routine')),
@@ -55,6 +56,18 @@ class HomeScreen extends ConsumerWidget {
                 child: Text('Add'),
               ),
               SizedBox(height: 50),
+              SizedBox(
+                height: 200,
+                child: ListView(
+                  shrinkWrap: true,
+                  children: [
+                    for (var rutine in rutines)
+                      Text(
+                        rutine.name.toString(),
+                      ),
+                  ],
+                ),
+              )
             ],
           ),
         ),
