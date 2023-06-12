@@ -18,45 +18,82 @@ class HomeScreen extends ConsumerWidget {
     _emailController.clear();
   }
 
-  List<Rutine>? rutines;
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final rutines = ref.watch(rutineProvider);
+    final rutinesRef = ref.watch(rutineProvider);
+    print('build');
 
     return Scaffold(
       appBar: AppBar(title: Text('Routine')),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              TextFormField(
-                controller: _nameController,
-                decoration: InputDecoration(hintText: 'Name'),
-              ),
-              TextFormField(
-                controller: _emailController,
-                decoration: InputDecoration(hintText: 'Email'),
-              ),
-              TextFormField(
-                controller: _addressController,
-                decoration: InputDecoration(hintText: 'Address'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  IsarService.addRoutine(
-                    nameController: _nameController.text,
-                    emailController: _emailController.text,
-                    ageController: _addressController.text,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            TextFormField(
+              controller: _nameController,
+              decoration: InputDecoration(hintText: 'Name'),
+            ),
+            TextFormField(
+              controller: _emailController,
+              decoration: InputDecoration(hintText: 'Email'),
+            ),
+            TextFormField(
+              controller: _addressController,
+              decoration: InputDecoration(hintText: 'Address'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                IsarService.addRoutine(
+                  name: _nameController.text,
+                  email: _emailController.text,
+                  address: _addressController.text,
+                );
+                // ref.read(rutineProvider.notifier).addRutine(rutinesRef);
+                clearText();
+              },
+              child: Text('Add'),
+            ),
+            SizedBox(height: 50),
+            Container(
+              height: 400,
+              alignment: Alignment.center,
+              // color: Colors.grey.shade200,
+              child: rutinesRef.when(
+                data: (data) {
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        for (final rutine in data)
+                          ListTile(
+                            leading: Text(rutine.id.toString()),
+                            title: Text(rutine.name.toString()),
+                            trailing: SizedBox(
+                              width: 50,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      ref
+                                          .read(rutineProvider.notifier)
+                                          .delete(rutine.id);
+                                    },
+                                    icon: Icon(Icons.delete_outline),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
                   );
-                  clearText();
                 },
-                child: Text('Add'),
+                error: (error, stackTrace) =>
+                    Center(child: Text(error.toString())),
+                loading: () => Center(child: CircularProgressIndicator()),
               ),
-              SizedBox(height: 50),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
