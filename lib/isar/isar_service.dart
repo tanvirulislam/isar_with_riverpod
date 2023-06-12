@@ -14,18 +14,17 @@ class IsarService {
   }
 
   static Future<void> addRoutine({
-    required nameController,
-    required emailController,
-    required ageController,
+    required name,
+    required email,
+    required address,
   }) async {
     final addRoutine = Rutine()
-      ..name = nameController
-      ..email = emailController
-      ..address = ageController;
+      ..name = name
+      ..email = email
+      ..address = address;
     await isar.writeTxn(() async {
       final newRoutine = await isar.rutines.put(addRoutine);
-      // print(isar.rutines.name);
-      print(newRoutine);
+      print('Routine length -----   $newRoutine');
     });
   }
 

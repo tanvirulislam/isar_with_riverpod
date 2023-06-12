@@ -4,18 +4,21 @@ import 'package:isar_with_riverpod/collections/rutine.dart';
 import 'package:isar_with_riverpod/isar/isar_service.dart';
 
 final rutineProvider =
-    NotifierProvider<RoutineNotifier, List<Rutine>>(RoutineNotifier.new);
+    AsyncNotifierProvider<RoutineNotifier, List<Rutine>>(RoutineNotifier.new);
 
-class RoutineNotifier extends Notifier<List<Rutine>> {
+class RoutineNotifier extends AsyncNotifier<List<Rutine>> {
   @override
-  List<Rutine> build() {
+  build() {
     return [];
   }
 
-  static Future<List<Rutine>> fetchRutine() async {
+// fetch data
+
+  Future<List<Rutine>> fetchRutine() async {
     return await IsarService.readRoutine();
   }
 
+// delete data
   void delete(Id id) {
     IsarService.delete(id);
   }
