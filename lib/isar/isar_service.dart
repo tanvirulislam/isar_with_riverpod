@@ -23,8 +23,7 @@ class IsarService {
       ..email = email
       ..address = address;
     await isar.writeTxn(() async {
-      final newRoutine = await isar.rutines.put(addRoutine);
-      print('Routine length -----   $newRoutine');
+      await isar.rutines.put(addRoutine);
     });
   }
 
@@ -49,4 +48,22 @@ class IsarService {
       await isar.rutines.put(rutineId);
     });
   }
+
+  // static watchRutine() {
+  //   Stream<List<Rutine>> allRutine =
+  //       isar.rutines.where().build().watch(fireImmediately: true);
+  //   allRutine.listen((event) {
+  //     if (event.length > 0) {
+  //       final newEvent = isar.rutines.where().findAll();
+  //       print(newEvent);
+  //     }
+  //   });
+  // }
+
 }
+
+// final cartsStreamProvider = StreamProvider((ref) => isarDB.cartForLocalUsers
+//     .filter()
+//     .isrIdIsNotNull()
+//     .build()
+//     .watch(fireImmediately: true));

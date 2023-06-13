@@ -6,6 +6,9 @@ import 'package:isar_with_riverpod/isar/isar_service.dart';
 final rutineProvider =
     AsyncNotifierProvider<RoutineNotifier, List<Rutine>>(RoutineNotifier.new);
 
+final ruitneStream = StreamProvider(
+    (ref) => isar.rutines.where().build().watch(fireImmediately: true));
+
 class RoutineNotifier extends AsyncNotifier<List<Rutine>> {
   @override
   build() async {

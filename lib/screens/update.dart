@@ -43,6 +43,7 @@ class UpdateScreen extends ConsumerWidget {
                       _emailController.text,
                       _addressController.text,
                     );
+                Navigator.pop(context);
 
                 // IsarService.updateRutine(
                 //   rutine.id,
